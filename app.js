@@ -2,7 +2,7 @@ const { printTable } = require("console-table-printer")
 const { getTitle } = require("./view")
 const { valueImput } = require("./view")
 
-function app(state, update, view) {
+async function app(state, update, view) {
     const { model, currentView } = state
     const { title, table } = currentView
     console.clear()
