@@ -1,9 +1,9 @@
 
 const figlet = require("figlet")
 const chalk = require("chalk")
+const inquirer = require("inquirer")
 
-//las funciones puras son auto-contenidas
-function getTitle(){
+function getTitle() {
     return chalk.blueBright(
         figlet.textSync(
             "Tip Calculator",
@@ -15,26 +15,26 @@ function getTitle(){
     )
 }
 
-function getTable(model){
-    const {billAmount} = model
+function getTable(model) {
+    const { billAmount } = model
     return [
         {
             "Bill Amount": billAmount
         }
     ]
-    const {percentage} = model
+    const { percentage } = model
     return [
         {
             "Tip (%)": percentage
         }
     ]
-    const {tip} = model
+    const { tip } = model
     return [
         {
             "Tip": tip
         }
     ]
-    const {total} = model
+    const { total } = model
     return [
         {
             "Total": total
@@ -42,14 +42,35 @@ function getTable(model){
     ]
 }
 
-function valueInput(model){
-    const {billAmount} = model
+function valueInput(model) {
+    const { billAmount } = model
     const messageBill = "Bill Amount?"
-    const {percentage} = model
+    const { percentage } = model
     const messagePercent = "Tip(%)?"
+    return inquirer.prompt([
+        {
+            name: "billAmount",
+            type: "input",
+            message: messageBill,
+            default: billAmount
+        },
+        {
+            name: "percentage",
+            type: "input",
+            message: messagePercent,
+            default: percentage
+        }
+    ])
+}
 
+function view(model) {
+    return {
+        title: getTitle(),
+        table: getTable(model)
+    }
 }
 
 module.exports = {
-    getTitle
+    view,
+    valueInput
 }
